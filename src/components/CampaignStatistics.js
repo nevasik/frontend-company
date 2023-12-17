@@ -39,7 +39,7 @@ function CampaignStatistics({campaign}) {
           <div className="fw-bold">Эффективность</div>
         </div>
         <Badge bg="primary" pill>
-          {statistics.views / statistics.clicks * 100}
+          {statistics.views / statistics.clicks * 100} %
         </Badge>
       </ListGroup.Item>
 
@@ -91,8 +91,6 @@ function CampaignStatistics({campaign}) {
         </Badge>
       </ListGroup.Item>
 
-
-      
     </ListGroup>
   );
 }

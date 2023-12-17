@@ -1,18 +1,19 @@
 import {useEffect, useState,} from "react";
 import {useParams} from "react-router-dom";
 import CommonContainer from "../../components/CommonContainer";
-import { Button, Image, ProgressBar } from "react-bootstrap";
+import { Button, Col, Image, ProgressBar, Row } from "react-bootstrap";
 import { getCampaign } from "../../store/thunks/campaignThunk";
 import { useDispatch, useSelector } from "react-redux";
 import CampaignStatistics from "../../components/CampaignStatistics";
 import { getRandomNumber } from "../../utils/math";
+import MyCard from "../../components/MyCard";
 
 function OneCampaign() {
     const [progress, setProgress] = useState(0)
 
     const startProgress = () => {
         const interval = setInterval(() => {
-            setProgress(p => {
+            setProgress(p => {  
                 if (p >= 100) {
                     clearInterval(interval)
                 }
@@ -30,10 +31,17 @@ function OneCampaign() {
 
     return campaign &&
      <CommonContainer title={`О компании:  ${campaign.name}`}>
-         <Image className="m-1" src={campaign.avatar} fluid />
-         {!progress && <Button onClick={startProgress}>Показать статистику</Button>}
-         {progress > 0 && progress <=100 && <ProgressBar now={progress} label={progress + "%"}/>}
-         {progress >= 100 && <CampaignStatistics campaign={campaign} />}
+        <Row>
+            <Col></Col>
+            <Col xs="8">
+                <MyCard campaign={campaign} progress={progress} startProgress={startProgress}/>
+                {progress > 0 && progress <=100 && <ProgressBar now={progress} label={progress + "%"}/>}
+                {progress >= 100 && <> <h2 className="text-center">Статистические данные</h2>  <CampaignStatistics campaign={campaign}/> </>}
+            </Col>
+            <Col></Col>
+        </Row>
+        
+         
     </CommonContainer> 
 }
 export default OneCampaign;

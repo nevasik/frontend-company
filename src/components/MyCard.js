@@ -1,17 +1,61 @@
+import { Badge, Button, ListGroup } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
+import { formatDate } from '../utils/date';
 
-function MyCard() {
+
+function MyCard({campaign, progress, startProgress}) {
+    const {statistics} = campaign
+
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card className='rounded mx-auto d-block' style={{ width: '30rem' }}>
+      <Card.Img variant="top" src={campaign.avatar} />
       <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">Card Subtitle</Card.Subtitle>
+        <Card.Title>{"компания " + campaign.name}</Card.Title>
         <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
         </Card.Text>
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
+      </Card.Body>
+      <ListGroup className="list-group-flush">
+
+      <ListGroup.Item
+        as="li"
+        className="d-flex justify-content-between align-items-start"
+      >
+        <div className="ms-2 me-auto">
+          <div className="fw-bold">Бюджет компании</div>
+        </div>
+        <Badge bg="danger" pill>
+          {campaign.budget} 
+        </Badge>
+      </ListGroup.Item>
+
+      <ListGroup.Item
+        as="li"
+        className="d-flex justify-content-between align-items-start"
+      >
+        <div className="ms-2 me-auto">
+          <div className="fw-bold">Целевая аудитория</div>
+        </div>
+        <Badge bg="primary" pill>
+          {campaign.targetAudience} 
+        </Badge>
+      </ListGroup.Item>
+
+      <ListGroup.Item
+        as="li"
+        className="d-flex justify-content-between align-items-start"
+      >
+        <div className="ms-2 me-auto">
+          <div className="fw-bold">Дата основания</div>
+        </div>
+        <Badge bg="primary" pill>
+          {formatDate(campaign.startDate)}
+        </Badge>
+      </ListGroup.Item>
+
+      </ListGroup>
+      
+      <Card.Body>
+        {progress===0 && <Button  onClick={startProgress}>Показать статистику</Button>}
       </Card.Body>
     </Card>
   );
