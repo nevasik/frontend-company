@@ -13,7 +13,7 @@ function OneCampaign() {
     const startProgress = () => {
         const interval = setInterval(() => {
             setProgress(p => {
-                if (p === 100) {
+                if (p >= 100) {
                     clearInterval(interval)
                 }
                 return p + getRandomNumber(3, 20)
@@ -29,11 +29,11 @@ function OneCampaign() {
     useEffect(() => { dispatch(getCampaign(id))}, [dispatch]);
 
     return campaign &&
-     <CommonContainer title={`О компании:  ${campaign.firstName} ${campaign.secondName} ${campaign.lastName}`}>
+     <CommonContainer title={`О компании:  ${campaign.name}`}>
          <Image className="m-1" src={campaign.avatar} fluid />
          {!progress && <Button onClick={startProgress}>Показать статистику</Button>}
          {progress > 0 && progress <=100 && <ProgressBar now={progress} label={progress + "%"}/>}
-         {progress >= 100 && <CampaignStatistics />}
+         {progress >= 100 && <CampaignStatistics campaign={campaign} />}
     </CommonContainer> 
 }
 export default OneCampaign;
